@@ -5,7 +5,6 @@ A new Flutter project.
 ## Getting Started
 
 - [Link for api key](https://beta.openai.com/account/api-key)
-- [ChatGPT API Key](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)
 
 This project is a starting point for a Flutter application.
 
