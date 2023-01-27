@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../api/api_key.dart';
 import '../widget/chatmessage.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
       max_tokens: 200,
     );
     _streamSubscription = chatGPT!
-        .builder("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")
+        .builder(chatGptApiKey)
         .onCompleteStream(request: request)
         .listen((event) {});
   }
@@ -60,7 +61,7 @@ class _ChatScreenState extends State<ChatScreen> {
         max_tokens: 200,
       );
       _streamSubscription = chatGPT!
-          .builder("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")
+          .builder(chatGptApiKey)
           .onCompleteStream(request: request)
           .listen((response) {
         ChatMessage botMessage = ChatMessage(
@@ -73,7 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
           isTyping = false;
         });
       });
-    } on Exception {
+    } catch (error) {
       setState(() {
         isTyping = false;
       });

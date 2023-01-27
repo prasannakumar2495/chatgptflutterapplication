@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:chatgptflutterapplication/ui/chatscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,12 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: const ChatScreen(),
+      home: AnimatedSplashScreen(
+        splash: const FlutterLogo(
+          size: 50,
+        ),
+        nextScreen: const ChatScreen(),
+      ),
     );
   }
 }
