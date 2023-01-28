@@ -1,11 +1,9 @@
-import 'dart:async';
-
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
+import 'package:chatgptflutterapplication/providers/chatmessagesprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../api/api_key.dart';
 import '../widget/chatmessage.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -17,88 +15,46 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<ChatMessage> _messages = [];
-  ChatGPT? chatGPT;
-  StreamSubscription? _streamSubscription;
   bool isTyping = false;
 
-  @override
-  void initState() {
-    super.initState();
-    chatGPT = ChatGPT.instance;
-    final request = CompleteReq(
-      prompt: "Hello",
-      model: kTranslateModelV3,
-      max_tokens: 200,
-    );
-    _streamSubscription = chatGPT!
-        .builder(chatGptApiKey)
-        .onCompleteStream(request: request)
-        .listen((event) {});
-  }
-
-  @override
-  void dispose() {
-    _streamSubscription?.cancel();
-    super.dispose();
-  }
-
-  void sendMessage() {
-    ChatMessage chatMessage = ChatMessage(
-      text: _controller.text.capitalized.trim(),
-      sender: "User",
-    );
+  void sendMessage(ChatMessagesProvider provider) {
     setState(() {
-      _messages.insert(0, chatMessage);
       isTyping = true;
     });
-    _controller.clear();
+    var message = ChatMessagesDataClass(
+      message: _controller.text.trim().capitalized,
+      sender: 'User',
+    );
+    provider.addMessages(message);
 
-    try {
-      final request = CompleteReq(
-        prompt: chatMessage.text,
-        model: kTranslateModelV3,
-        max_tokens: 200,
+    var response = provider.postMessages(message);
+    response.then((value) {
+      var chatMessage = ChatMessagesDataClass(
+        sender: 'Bot',
+        message: value.choices[0].text.trim().capitalized,
       );
-      _streamSubscription = chatGPT!
-          .builder(chatGptApiKey)
-          .onCompleteStream(request: request)
-          .listen((response) {
-        ChatMessage botMessage = ChatMessage(
-          text: response!.choices[0].text.trim().capitalized,
-          sender: "Bot",
-        );
-        Vx.log(response.choices[0].text);
-        setState(() {
-          _messages.insert(0, botMessage);
-          isTyping = false;
-        });
-      });
-    } catch (error) {
-      setState(() {
-        isTyping = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('An error has occurred, please try again.'),
-        ),
-      );
-    }
+      provider.addMessages(chatMessage);
+    });
+
+    _controller.clear();
+    setState(() {
+      isTyping = false;
+    });
   }
 
-  Widget _buildQuestionComposer() {
+  Widget _buildQuestionComposer(ChatMessagesProvider provider) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
           child: TextField(
-            onSubmitted: (value) => sendMessage(),
+            onSubmitted: (value) => sendMessage(provider),
             controller: _controller,
             decoration: const InputDecoration(hintText: 'Enter the Query...'),
           ),
         ),
         IconButton(
-          onPressed: () => sendMessage(),
+          onPressed: () => sendMessage(provider),
           icon: const Icon(Icons.send_rounded),
         ),
       ],
@@ -107,6 +63,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ChatMessagesProvider>(context);
+    var messages = provider.fetchAllMessages;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -122,9 +81,12 @@ class _ChatScreenState extends State<ChatScreen> {
               child: ListView.builder(
                 reverse: true,
                 padding: const EdgeInsets.all(8),
-                itemCount: _messages.length,
+                itemCount: messages.length,
                 itemBuilder: (context, index) {
-                  return _messages[index];
+                  return ChatMessage(
+                    text: messages[index].message,
+                    sender: messages[index].sender,
+                  );
                 },
               ),
             ),
@@ -147,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
               decoration: BoxDecoration(
                 color: context.cardColor,
               ),
-              child: _buildQuestionComposer(),
+              child: _buildQuestionComposer(provider),
             ),
           ],
         ),
