@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:chatgptflutterapplication/models/completion/completionpost.dart';
 import 'package:chatgptflutterapplication/models/completion/completionresponse.dart';
 import 'package:http/http.dart' as http;
-import '../api/api_details.dart';
+import '../api/apidetails.dart';
 
 class RemotesService {
   Future<ChatGptCompletionApiResponse> postChatGptCompletion(
