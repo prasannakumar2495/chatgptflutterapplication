@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:chatgptflutterapplication/models/completion/completionpost.dart';
 import 'package:chatgptflutterapplication/models/completion/completionresponse.dart';
+import 'package:chatgptflutterapplication/models/edit/editpostresponse.dart';
 import 'package:http/http.dart' as http;
 import '../api/apidetails.dart';
+import '../models/edit/editpost.dart';
 
 class RemotesService {
   Future<ChatGptCompletionApiResponse> postChatGptCompletion(
@@ -26,6 +28,28 @@ class RemotesService {
       object: data.object,
       created: data.created,
       model: data.model,
+      choices: data.choices,
+      usage: data.usage,
+    );
+  }
+
+  Future<ChatGptEditApiResponse> postChatGptEditApi(
+      ChatGptEditApi request) async {
+    var client = http.Client();
+    var uri = Uri.parse(chatGptEditUrl);
+    var response = await client.post(
+      uri,
+      body: chatGptEditApiToJson(request),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $chatGptApiKey',
+        "Accept": "application/json",
+        "content-type": "application/json",
+      },
+    );
+    var data = chatGptEditApiResponseFromJson(response.body);
+    return ChatGptEditApiResponse(
+      object: data.object,
+      created: data.created,
       choices: data.choices,
       usage: data.usage,
     );

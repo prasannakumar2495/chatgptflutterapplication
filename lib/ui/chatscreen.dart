@@ -7,6 +7,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../widget/chatmessage.dart';
 
 class ChatScreen extends StatefulWidget {
+  static const routeName = 'chatScreen';
   const ChatScreen({super.key});
 
   @override
@@ -34,12 +35,12 @@ class _ChatScreenState extends State<ChatScreen> {
         message: value.choices[0].text.trim().capitalized,
       );
       provider.addMessages(chatMessage);
+      setState(() {
+        isTyping = false;
+      });
     });
 
     _controller.clear();
-    setState(() {
-      isTyping = false;
-    });
   }
 
   Widget _buildQuestionComposer(ChatMessagesProvider provider) {
@@ -69,7 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'ChatGPT App',
+          'Ask Questions',
           style: GoogleFonts.roboto(),
         ),
       ),
