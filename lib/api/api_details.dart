@@ -1,3 +1,3 @@
-const chatGptApiKey = "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";
+const chatGptApiKey = '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';
 
-const chatGptCompletionUrl = "https://api.openai.com/v1/completions";
+const chatGptCompletionUrl = 'https://api.openai.com/v1/completions';
