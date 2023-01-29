@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'ChatGPT Flutter Application',
+        title: 'AIBot',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,

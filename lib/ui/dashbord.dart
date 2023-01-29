@@ -14,7 +14,7 @@ class DashboardScreen extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ChatGPT API'),
+        title: const Text('AIBot'),
       ),
       body: Container(
         padding: const EdgeInsets.all(8.0),
