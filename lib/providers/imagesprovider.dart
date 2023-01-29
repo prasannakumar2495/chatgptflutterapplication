@@ -27,6 +27,10 @@ class ImagesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearAllData() {
+    _listImages.clear();
+  }
+
   Future<ChatGptImageApiResponse> postImages(
       ImagesDataClass imagesDataClass) async {
     var data = ChatGptImageApi(

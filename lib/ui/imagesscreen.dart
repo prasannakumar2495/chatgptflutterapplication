@@ -16,10 +16,21 @@ class _ImageScreenState extends State<ImageScreen> {
 
   final sentenceController = TextEditingController();
   final numberOfImagesCotroller = TextEditingController();
-
+  late ImagesProvider provider;
   bool isLoading = false;
+
+  @override
+  void initState() {
+    provider = Provider.of<ImagesProvider>(
+      context,
+      listen: false,
+    );
+    super.initState();
+  }
+
   @override
   void dispose() {
+    provider.clearAllData();
     sentenceController.dispose();
     numberOfImagesCotroller.dispose();
     super.dispose();
@@ -27,10 +38,6 @@ class _ImageScreenState extends State<ImageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<ImagesProvider>(
-      context,
-      listen: false,
-    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Generate Images'),
@@ -95,6 +102,7 @@ class _ImageScreenState extends State<ImageScreen> {
                           setState(() {
                             isLoading = true;
                           });
+                          provider.clearAllData();
                           var request = ImagesDataClass(
                             count:
                                 int.parse(numberOfImagesCotroller.text.trim()),

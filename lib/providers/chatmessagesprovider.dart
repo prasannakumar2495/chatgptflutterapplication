@@ -38,6 +38,11 @@ class ChatMessagesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearAllData() {
+    spellingMessages.clear();
+    messages.clear();
+  }
+
   Future<ChatGptCompletionApiResponse> postMessages(
       ChatMessagesDataClass message) async {
     var data = ChatGptCompletionApi(

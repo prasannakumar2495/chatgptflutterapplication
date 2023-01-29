@@ -15,9 +15,13 @@ class SingleImageWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Column(
         children: [
-          FadeInImage.assetNetwork(
-            placeholder: 'assets/loading1.gif',
-            image: imageLink,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: FadeInImage.assetNetwork(
+              fit: BoxFit.fill,
+              placeholder: 'assets/loading1.gif',
+              image: imageLink,
+            ),
           ),
           const Divider(
             color: Colors.transparent,
@@ -37,7 +41,10 @@ class SingleImageWidget extends StatelessWidget {
             },
             child: Text(
               'Click to copy above image link!',
-              style: GoogleFonts.roboto(color: Colors.blue),
+              style: GoogleFonts.roboto(
+                color: Colors.blue,
+                fontSize: 18,
+              ),
             ),
           ),
         ],

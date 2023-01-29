@@ -22,8 +22,21 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
   bool isTyping = false;
   bool isListening = false;
+  late ChatMessagesProvider provider;
 
   final _speechToText = SpeechToText();
+
+  @override
+  void initState() {
+    provider = Provider.of<ChatMessagesProvider>(context, listen: false);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    provider.clearAllData();
+    super.dispose();
+  }
 
   void sendMessage(ChatMessagesProvider provider) {
     setState(() {
@@ -132,7 +145,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<ChatMessagesProvider>(context);
     var messages = provider.fetchAllMessages;
 
     return Scaffold(

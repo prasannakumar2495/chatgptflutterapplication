@@ -15,13 +15,26 @@ class EditScreen extends StatefulWidget {
 
 class _EditScreenState extends State<EditScreen> {
   final TextEditingController _controller = TextEditingController();
+  late ChatMessagesProvider provider;
   bool isTyping = false;
+
   @override
-  Widget build(BuildContext context) {
-    var provider = Provider.of<ChatMessagesProvider>(
+  void initState() {
+    provider = Provider.of<ChatMessagesProvider>(
       context,
       listen: false,
     );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    provider.clearAllData();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Check Spellings'),
