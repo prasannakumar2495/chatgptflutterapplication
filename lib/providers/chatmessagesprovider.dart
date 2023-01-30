@@ -3,8 +3,9 @@ import 'package:chatgptflutterapplication/models/completion/completionresponse.d
 import 'package:chatgptflutterapplication/models/edit/editpost.dart';
 import 'package:chatgptflutterapplication/models/edit/editpostresponse.dart';
 import 'package:chatgptflutterapplication/service/remoteservice.dart';
-import 'package:chatgptflutterapplication/util/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../util/constants.dart';
 
 class ChatMessagesDataClass {
   String message;
@@ -46,7 +47,7 @@ class ChatMessagesProvider extends ChangeNotifier {
   Future<ChatGptCompletionApiResponse> postMessages(
       ChatMessagesDataClass message) async {
     var data = ChatGptCompletionApi(
-      model: Constants.COMPLETION_MODEL,
+      model: COMPLETION_MODEL,
       prompt: message.message,
       temperature: 0,
       maxTokens: 200,
@@ -58,7 +59,7 @@ class ChatMessagesProvider extends ChangeNotifier {
   Future<ChatGptEditApiResponse> postSpellingMessages(
       ChatMessagesDataClass message) async {
     var data = ChatGptEditApi(
-      model: Constants.EDIT_MODEL,
+      model: EDIT_MODEL,
       input: message.message,
       instruction: 'Fix the spelling mistakes',
     );

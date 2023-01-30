@@ -6,6 +6,7 @@ import 'package:chatgptflutterapplication/ui/chatscreen.dart';
 import 'package:chatgptflutterapplication/ui/dashbord.dart';
 import 'package:chatgptflutterapplication/ui/editscreen.dart';
 import 'package:chatgptflutterapplication/ui/imagesscreen.dart';
+import 'package:chatgptflutterapplication/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
           splash: const FlutterLogo(
             size: 50,
           ),
-          nextScreen: const DashboardScreen(),
+          nextScreen: const LoginScreen(),
         ),
         routes: {
           ChatScreen.routeName: (context) => const ChatScreen(),
