@@ -1,17 +1,10 @@
 # chatgptflutterapplication
 
-A new Flutter project.
-
-## Getting Started
+This project will be using the API's that have been provided by OpenAI.
+Currently, Completion, edit and image api's are implemented.
+To use these api's, we should provided the api key that can be found freely created the using the link that has been provided below.
 
 - [Link for api key](https://beta.openai.com/account/api-key)
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
