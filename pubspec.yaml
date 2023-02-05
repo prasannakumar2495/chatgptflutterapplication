@@ -39,7 +39,6 @@ dependencies:
   chat_gpt_sdk: ^1.0.2+1
   velocity_x: ^3.6.0
   google_fonts: ^3.0.1
-  animated_splash_screen: ^1.3.0
   http: ^0.13.5
   provider: ^6.0.5
   url_launcher: ^6.1.8
@@ -52,6 +51,8 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/slide2.jpg"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/slide2.jpg"
 
 
 dev_dependencies:
