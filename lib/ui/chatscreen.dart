@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:chatgptflutterapplication/providers/chatmessagesprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:speech_to_text/speech_to_text.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:velocity_x/velocity_x.dart';
 
 import '../widget/chatmessage.dart';
@@ -20,14 +18,15 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
+  late stt.SpeechToText _speechToText;
+
   bool isTyping = false;
   bool isListening = false;
   late ChatMessagesProvider provider;
 
-  final _speechToText = SpeechToText();
-
   @override
   void initState() {
+    _speechToText = stt.SpeechToText();
     provider = Provider.of<ChatMessagesProvider>(context, listen: false);
     super.initState();
   }
@@ -35,6 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void dispose() {
     provider.clearAllData();
+    _speechToText.stop();
     super.dispose();
   }
 
@@ -61,6 +61,25 @@ class _ChatScreenState extends State<ChatScreen> {
     });
 
     _controller.clear();
+  }
+
+  void onListen() async {
+    if (isListening) {
+      bool available = await _speechToText.initialize(
+        onStatus: (status) => debugPrint('onStatus: $status'),
+        onError: (errorNotification) =>
+            debugPrint('onError: $errorNotification'),
+      );
+      if (available) {
+        _speechToText.listen(
+          onResult: (result) {
+            _controller.text = result.recognizedWords;
+          },
+        );
+      } else {
+        _speechToText.stop();
+      }
+    }
   }
 
   Widget _buildQuestionComposer(ChatMessagesProvider provider) {
@@ -90,55 +109,30 @@ class _ChatScreenState extends State<ChatScreen> {
           },
           icon: const Icon(Icons.send_rounded),
         ),
-        if (Platform.isIOS)
-          SizedBox(
-            child: AvatarGlow(
-              endRadius: 20,
-              repeat: true,
-              duration: const Duration(milliseconds: 1000),
-              glowColor: const Color.fromARGB(255, 10, 11, 12),
-              repeatPauseDuration: const Duration(milliseconds: 100),
-              showTwoGlows: true,
-              animate: isListening,
-              child: GestureDetector(
-                onTapDown: (details) async {
-                  if (!isListening) {
-                    var available = await _speechToText.initialize();
-                    if (available) {
-                      setState(() {
-                        isListening = true;
-                        _speechToText.listen(
-                          onResult: (result) {
-                            _controller.text = result.recognizedWords;
-                          },
-                        );
-                      });
-                    }
-                  }
-                },
-                onTapUp: (details) {
-                  setState(() {
-                    isListening = false;
-                  });
-                  if (_controller.text.isNotEmpty) {
-                    sendMessage(provider);
-                  } else {
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Enter your query!'),
-                      ),
-                    );
-                  }
-
-                  _speechToText.stop();
-                },
-                child: Icon(
-                  isListening ? Icons.mic_rounded : Icons.mic_none_rounded,
-                ),
+        SizedBox(
+          child: AvatarGlow(
+            endRadius: 20,
+            repeat: true,
+            duration: const Duration(milliseconds: 1000),
+            glowColor: const Color.fromARGB(255, 10, 11, 12),
+            repeatPauseDuration: const Duration(milliseconds: 100),
+            showTwoGlows: true,
+            animate: isListening,
+            child: IconButton(
+              icon: Icon(
+                isListening ? Icons.mic_rounded : Icons.mic_none_rounded,
               ),
+              onPressed: () {
+                setState(() {
+                  isListening = !isListening;
+                });
+                if (isListening) {
+                  onListen();
+                }
+              },
             ),
           ),
+        ),
       ],
     ).px16();
   }
@@ -187,6 +181,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             const Divider(),
             Container(
+              margin: const EdgeInsets.only(bottom: 5),
               decoration: BoxDecoration(
                 color: context.cardColor,
               ),
