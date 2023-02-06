@@ -155,7 +155,6 @@ class _ChatScreenState extends State<ChatScreen> {
             Flexible(
               child: ListView.builder(
                 reverse: true,
-                padding: const EdgeInsets.all(8),
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
                   return ChatMessage(
