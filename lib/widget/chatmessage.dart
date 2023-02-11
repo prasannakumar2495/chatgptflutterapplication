@@ -17,12 +17,10 @@ class ChatMessage extends StatelessWidget {
             ? const Color.fromARGB(255, 50, 50, 50)
             : const Color.fromARGB(255, 70, 70, 70),
         leading: CircleAvatar(
-          backgroundColor:
-              sender == "User" ? Colors.greenAccent : Colors.redAccent,
-          child: Text(
-            sender[0],
-            style: GoogleFonts.roboto(color: Colors.black),
-          ),
+          backgroundColor: Colors.transparent,
+          backgroundImage: sender == "User"
+              ? const AssetImage('assets/man.png')
+              : const AssetImage('assets/aigptlowresolutioncolorlogo.png'),
         ),
         title: Text(
           sender,

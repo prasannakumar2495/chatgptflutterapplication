@@ -4,6 +4,6 @@
         <color android:color="@color/ic_launcher_background"/>
     </item>
     <item>
-        <bitmap android:gravity="center" android:src="@drawable/slide2"/>
+        <bitmap android:gravity="center" android:src="@drawable/aigptlogo"/>
     </item>
 </layer-list>

@@ -20,7 +20,7 @@
     </queries>
 
    <application
-        android:label="AIBot"
+        android:label="AI GPT"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
