@@ -74,11 +74,11 @@ class DashboardScreen extends StatelessWidget {
                       value.updateTheme();
                     },
                     leading: value.fetchThemeNotifier
-                        ? const Icon(Icons.dark_mode_rounded)
-                        : const Icon(Icons.light_mode_rounded),
+                        ? const Icon(Icons.light_mode_rounded)
+                        : const Icon(Icons.dark_mode_rounded),
                     title: value.fetchThemeNotifier
-                        ? const Text('Dark Mode')
-                        : const Text('Light Mode'),
+                        ? const Text('Light Mode')
+                        : const Text('Dark Mode'),
                   ),
                 ),
                 ListTile(
