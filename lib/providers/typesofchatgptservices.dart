@@ -12,7 +12,6 @@ class TypesOfChatGptServiceProvider extends ChangeNotifier {
     TypesOfChatGptServices(typeName: 'Ask Questions'),
     TypesOfChatGptServices(typeName: 'Check Spellings'),
     TypesOfChatGptServices(typeName: 'Generate Images'),
-    TypesOfChatGptServices(typeName: 'Something'),
   ];
 
   List<TypesOfChatGptServices> get fetchAllServices {
