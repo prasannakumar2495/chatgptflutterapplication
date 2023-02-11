@@ -46,6 +46,7 @@ dependencies:
   avatar_glow: ^2.0.2
   speech_to_text: ^6.1.1
   rive: ^0.10.1
+  shared_preferences: ^2.0.17
 
 flutter_icons:
   android: "launcher_icon"

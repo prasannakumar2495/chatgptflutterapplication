@@ -1,7 +1,12 @@
+import 'package:chatgptflutterapplication/providers/alldata.dart';
+import 'package:chatgptflutterapplication/providers/themeprovider.dart';
 import 'package:chatgptflutterapplication/providers/typesofchatgptservices.dart';
+import 'package:chatgptflutterapplication/ui/chatscreen.dart';
 import 'package:chatgptflutterapplication/widget/dashboardsingleview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../widget/alldatamessagesindashboard.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -12,6 +17,7 @@ class DashboardScreen extends StatelessWidget {
       context,
       listen: false,
     );
+    var allDataProvider = Provider.of<AllDataProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('AIBot'),
@@ -24,64 +30,65 @@ class DashboardScreen extends StatelessWidget {
               bottom: false,
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                child: TextButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        side: const BorderSide(color: Colors.black),
+                child: Consumer<ThemeNotifierProvider>(
+                  builder: (context, value, child) => TextButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          side: value.fetchThemeNotifier
+                              ? const BorderSide(color: Colors.grey)
+                              : const BorderSide(color: Colors.black),
+                        ),
                       ),
                     ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Icon(Icons.add_rounded),
-                      Container(
-                        margin: const EdgeInsets.only(left: 5),
-                        child: const Text('New Chat'),
-                      ),
-                    ],
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).pushNamed(ChatScreen.routeName);
+                    },
+                    child: const ListTile(
+                      visualDensity: VisualDensity(vertical: -4, horizontal: 0),
+                      contentPadding: EdgeInsets.zero,
+                      leading: Icon(Icons.add_rounded),
+                      title: Text('New Chat'),
+                    ),
                   ),
                 ),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemCount: 1000,
-                itemBuilder: (context, index) {
-                  return const ListTile(
-                    leading: Icon(Icons.message_rounded),
-                    title: Text('Message'),
-                  );
-                },
-              ),
-            ),
+            const AllDataMessagesInDashboard(),
             Column(
-              children: const [
-                Divider(),
+              children: [
+                const Divider(),
                 ListTile(
-                  leading: Icon(Icons.delete_rounded),
-                  title: Text('Clear Conversations'),
+                  onTap: () {
+                    allDataProvider.clearAllData();
+                  },
+                  leading: const Icon(Icons.delete_rounded),
+                  title: const Text('Clear Conversations'),
                 ),
-                ListTile(
-                  leading: Icon(Icons.dark_mode_rounded),
-                  title: Text('Dark Mode'),
+                Consumer<ThemeNotifierProvider>(
+                  builder: (context, value, child) => ListTile(
+                    onTap: () {
+                      value.updateTheme();
+                    },
+                    leading: value.fetchThemeNotifier
+                        ? const Icon(Icons.dark_mode_rounded)
+                        : const Icon(Icons.light_mode_rounded),
+                    title: value.fetchThemeNotifier
+                        ? const Text('Dark Mode')
+                        : const Text('Light Mode'),
+                  ),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.discord_rounded),
                   title: Text('OpenAI Discord'),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.open_in_new_rounded),
                   title: Text('Updated & FAQ'),
                 ),
-                ListTile(
+                const ListTile(
                   leading: Icon(Icons.logout_rounded),
                   title: Text('Log out'),
                 ),

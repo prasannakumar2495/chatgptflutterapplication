@@ -1,4 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:chatgptflutterapplication/providers/alldata.dart';
 import 'package:chatgptflutterapplication/providers/chatmessagesprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,11 +24,13 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isTyping = false;
   bool isListening = false;
   late ChatMessagesProvider provider;
+  late AllDataProvider allDataProvider;
 
   @override
   void initState() {
     _speechToText = stt.SpeechToText();
     provider = Provider.of<ChatMessagesProvider>(context, listen: false);
+    allDataProvider = Provider.of<AllDataProvider>(context, listen: false);
     super.initState();
   }
 
@@ -47,6 +50,9 @@ class _ChatScreenState extends State<ChatScreen> {
       sender: 'User',
     );
     provider.addMessages(message);
+    allDataProvider.addData(
+      AllData(id: UniqueKey().toString(), message: message.message),
+    );
 
     var response = provider.postMessages(message);
     response.then((value) {
