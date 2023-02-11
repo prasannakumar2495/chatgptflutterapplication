@@ -5,6 +5,7 @@ import 'package:chatgptflutterapplication/ui/chatscreen.dart';
 import 'package:chatgptflutterapplication/widget/dashboardsingleview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widget/alldatamessagesindashboard.dart';
 
@@ -80,13 +81,32 @@ class DashboardScreen extends StatelessWidget {
                         : const Text('Light Mode'),
                   ),
                 ),
-                const ListTile(
-                  leading: Icon(Icons.discord_rounded),
-                  title: Text('OpenAI Discord'),
+                ListTile(
+                  onTap: () async {
+                    const url = 'https://discord.com/invite/openai';
+                    final uri = Uri.parse(url);
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri);
+                    } else {
+                      throw 'Could not launch $uri';
+                    }
+                  },
+                  leading: const Icon(Icons.discord_rounded),
+                  title: const Text('OpenAI Discord'),
                 ),
-                const ListTile(
-                  leading: Icon(Icons.open_in_new_rounded),
-                  title: Text('Updated & FAQ'),
+                ListTile(
+                  onTap: () async {
+                    const url =
+                        'https://help.openai.com/en/collections/3742473-chatgpt';
+                    final uri = Uri.parse(url);
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri);
+                    } else {
+                      throw 'Could not launch $uri';
+                    }
+                  },
+                  leading: const Icon(Icons.open_in_new_rounded),
+                  title: const Text('Updated & FAQ'),
                 ),
                 const ListTile(
                   leading: Icon(Icons.logout_rounded),
