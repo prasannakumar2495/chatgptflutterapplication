@@ -21,6 +21,7 @@ class DashboardScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SafeArea(
+              bottom: false,
               child: Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                 child: TextButton(
@@ -50,9 +51,14 @@ class DashboardScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
                 itemCount: 1000,
                 itemBuilder: (context, index) {
-                  return const Text('child');
+                  return const ListTile(
+                    leading: Icon(Icons.message_rounded),
+                    title: Text('Message'),
+                  );
                 },
               ),
             ),
