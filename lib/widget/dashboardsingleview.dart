@@ -13,21 +13,24 @@ class DashboardSingleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: () {
-          if (typeName == 'Ask Questions') {
-            Navigator.of(context).pushNamed(ChatScreen.routeName);
-          } else if (typeName == 'Check Spellings') {
-            Navigator.of(context).pushNamed(EditScreen.routeName);
-          } else if (typeName == 'Generate Images') {
-            Navigator.of(context).pushNamed(ImageScreen.routeName);
-          }
-        },
-        child: Center(
-          child: Text(
-            typeName,
-            style: GoogleFonts.roboto(),
+    return SizedBox(
+      height: 100,
+      child: Card(
+        child: InkWell(
+          onTap: () {
+            if (typeName == 'Ask Questions') {
+              Navigator.of(context).pushNamed(ChatScreen.routeName);
+            } else if (typeName == 'Check Spellings') {
+              Navigator.of(context).pushNamed(EditScreen.routeName);
+            } else if (typeName == 'Generate Images') {
+              Navigator.of(context).pushNamed(ImageScreen.routeName);
+            }
+          },
+          child: Center(
+            child: Text(
+              typeName,
+              style: GoogleFonts.roboto(),
+            ),
           ),
         ),
       ),

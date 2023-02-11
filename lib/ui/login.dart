@@ -2,21 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class FlipTile extends StatefulWidget {
+class FlipTileLogin extends StatefulWidget {
   final Widget front;
   final Widget back;
 
-  const FlipTile({
+  const FlipTileLogin({
     super.key,
     required this.front,
     required this.back,
   });
 
   @override
-  FlipTileState createState() => FlipTileState();
+  FlipTileLoginState createState() => FlipTileLoginState();
 }
 
-class FlipTileState extends State<FlipTile>
+class FlipTileLoginState extends State<FlipTileLogin>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation _animation;

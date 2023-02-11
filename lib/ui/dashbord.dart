@@ -16,15 +16,52 @@ class DashboardScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('AIBot'),
       ),
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: 1000,
+                itemBuilder: (context, index) {
+                  return const Text('child');
+                },
+              ),
+            ),
+            Column(
+              children: const [
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.delete_rounded),
+                  title: Text('Clear Conversations'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.dark_mode_rounded),
+                  title: Text('Dark Mode'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.discord_rounded),
+                  title: Text('OpenAI Discord'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.open_in_new_rounded),
+                  title: Text('Updated & FAQ'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout_rounded),
+                  title: Text('Log out'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
       body: Container(
         padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
+        alignment: Alignment.center,
+        child: ListView.builder(
+          shrinkWrap: true,
           itemCount: provider.fetchAllServices.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 4.0,
-            mainAxisSpacing: 4.0,
-          ),
           itemBuilder: (context, index) {
             return DashboardSingleView(
               typeName: provider.fetchAllServices[index].typeName,

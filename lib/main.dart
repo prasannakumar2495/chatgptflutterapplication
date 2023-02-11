@@ -2,9 +2,9 @@ import 'package:chatgptflutterapplication/providers/chatmessagesprovider.dart';
 import 'package:chatgptflutterapplication/providers/imagesprovider.dart';
 import 'package:chatgptflutterapplication/providers/typesofchatgptservices.dart';
 import 'package:chatgptflutterapplication/ui/chatscreen.dart';
+import 'package:chatgptflutterapplication/ui/dashbord.dart';
 import 'package:chatgptflutterapplication/ui/editscreen.dart';
 import 'package:chatgptflutterapplication/ui/imagesscreen.dart';
-import 'package:chatgptflutterapplication/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,22 +36,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           primarySwatch: Colors.blue,
         ),
-        home: FlipTile(
-          front: Container(
-            color: Colors.blue,
-            child: const Text(
-              'Front',
-              style: TextStyle(fontSize: 24),
-            ),
-          ),
-          back: Container(
-            color: Colors.blue,
-            child: const Text(
-              'Back',
-              style: TextStyle(fontSize: 24),
-            ),
-          ),
-        ),
+        home: const DashboardScreen(),
         routes: {
           ChatScreen.routeName: (context) => const ChatScreen(),
           EditScreen.routeName: (context) => const EditScreen(),
