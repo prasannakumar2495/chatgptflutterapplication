@@ -1,6 +1,7 @@
 import 'package:chatgptflutterapplication/providers/alldata.dart';
 import 'package:chatgptflutterapplication/providers/themeprovider.dart';
 import 'package:chatgptflutterapplication/providers/typesofchatgptservices.dart';
+import 'package:chatgptflutterapplication/providers/username.dart';
 import 'package:chatgptflutterapplication/ui/chatscreen.dart';
 import 'package:chatgptflutterapplication/widget/dashboardsingleview.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../widget/alldatamessagesindashboard.dart';
 
 class DashboardScreen extends StatelessWidget {
+  static const routeName = 'dashboardScreen';
   const DashboardScreen({super.key});
 
   @override
@@ -19,6 +21,8 @@ class DashboardScreen extends StatelessWidget {
       listen: false,
     );
     var allDataProvider = Provider.of<AllDataProvider>(context, listen: false);
+    var userNameProvider =
+        Provider.of<UserNameProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('AIBot'),
@@ -108,9 +112,13 @@ class DashboardScreen extends StatelessWidget {
                   leading: const Icon(Icons.open_in_new_rounded),
                   title: const Text('Updated & FAQ'),
                 ),
-                const ListTile(
-                  leading: Icon(Icons.logout_rounded),
-                  title: Text('Log out'),
+                ListTile(
+                  onTap: () {
+                    userNameProvider.clearUserName();
+                    Navigator.of(context).pushReplacementNamed('/');
+                  },
+                  leading: const Icon(Icons.logout_rounded),
+                  title: const Text('Log out'),
                 ),
               ],
             ),

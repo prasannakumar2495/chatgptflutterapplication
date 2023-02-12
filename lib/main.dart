@@ -2,10 +2,12 @@ import 'package:chatgptflutterapplication/providers/alldata.dart';
 import 'package:chatgptflutterapplication/providers/chatmessagesprovider.dart';
 import 'package:chatgptflutterapplication/providers/imagesprovider.dart';
 import 'package:chatgptflutterapplication/providers/typesofchatgptservices.dart';
+import 'package:chatgptflutterapplication/providers/username.dart';
 import 'package:chatgptflutterapplication/ui/chatscreen.dart';
 import 'package:chatgptflutterapplication/ui/dashbord.dart';
 import 'package:chatgptflutterapplication/ui/editscreen.dart';
 import 'package:chatgptflutterapplication/ui/imagesscreen.dart';
+import 'package:chatgptflutterapplication/ui/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +39,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ThemeNotifierProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => UserNameProvider(),
+        ),
       ],
       child: Consumer<ThemeNotifierProvider>(
         builder: (context, notifier, child) => MaterialApp(
@@ -48,11 +53,12 @@ class MyApp extends StatelessWidget {
                 ? Brightness.dark
                 : Brightness.light,
           ),
-          home: const DashboardScreen(),
+          home: const LoginScreen(),
           routes: {
             ChatScreen.routeName: (context) => const ChatScreen(),
             EditScreen.routeName: (context) => const EditScreen(),
             ImageScreen.routeName: (context) => const ImageScreen(),
+            DashboardScreen.routeName: (context) => const DashboardScreen(),
           },
         ),
       ),
