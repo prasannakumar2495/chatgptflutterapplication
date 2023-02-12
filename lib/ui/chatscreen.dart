@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:chatgptflutterapplication/providers/alldata.dart';
 import 'package:chatgptflutterapplication/providers/chatmessagesprovider.dart';
+import 'package:chatgptflutterapplication/providers/themeprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -116,26 +117,30 @@ class _ChatScreenState extends State<ChatScreen> {
           icon: const Icon(Icons.send_rounded),
         ),
         SizedBox(
-          child: AvatarGlow(
-            endRadius: 20,
-            repeat: true,
-            duration: const Duration(milliseconds: 1000),
-            glowColor: const Color.fromARGB(255, 10, 11, 12),
-            repeatPauseDuration: const Duration(milliseconds: 100),
-            showTwoGlows: true,
-            animate: isListening,
-            child: IconButton(
-              icon: Icon(
-                isListening ? Icons.mic_rounded : Icons.mic_none_rounded,
+          child: Consumer<ThemeNotifierProvider>(
+            builder: (context, value, child) => AvatarGlow(
+              endRadius: 20,
+              repeat: true,
+              duration: const Duration(milliseconds: 1000),
+              glowColor: value.fetchThemeNotifier
+                  ? Colors.white38
+                  : const Color.fromARGB(255, 10, 11, 12),
+              repeatPauseDuration: const Duration(milliseconds: 100),
+              showTwoGlows: true,
+              animate: isListening,
+              child: IconButton(
+                icon: Icon(
+                  isListening ? Icons.mic_rounded : Icons.mic_none_rounded,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isListening = !isListening;
+                  });
+                  if (isListening) {
+                    onListen();
+                  }
+                },
               ),
-              onPressed: () {
-                setState(() {
-                  isListening = !isListening;
-                });
-                if (isListening) {
-                  onListen();
-                }
-              },
             ),
           ),
         ),
