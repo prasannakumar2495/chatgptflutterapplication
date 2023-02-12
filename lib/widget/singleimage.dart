@@ -17,10 +17,23 @@ class SingleImageWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: FadeInImage.assetNetwork(
+            child: Image.network(
+              imageLink,
               fit: BoxFit.fill,
-              placeholder: 'assets/loading1.gif',
-              image: imageLink,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           const Divider(
