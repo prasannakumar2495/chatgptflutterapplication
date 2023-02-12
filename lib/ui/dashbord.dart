@@ -23,6 +23,8 @@ class DashboardScreen extends StatelessWidget {
     var allDataProvider = Provider.of<AllDataProvider>(context, listen: false);
     var userNameProvider =
         Provider.of<UserNameProvider>(context, listen: false);
+    var themeProvider =
+        Provider.of<ThemeNotifierProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('AIBot'),
@@ -41,7 +43,7 @@ class DashboardScreen extends StatelessWidget {
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
-                          side: value.fetchThemeNotifier
+                          side: value.fetchTheme
                               ? const BorderSide(color: Colors.grey)
                               : const BorderSide(color: Colors.black),
                         ),
@@ -77,10 +79,10 @@ class DashboardScreen extends StatelessWidget {
                     onTap: () {
                       value.updateTheme();
                     },
-                    leading: value.fetchThemeNotifier
+                    leading: value.fetchTheme
                         ? const Icon(Icons.light_mode_rounded)
                         : const Icon(Icons.dark_mode_rounded),
-                    title: value.fetchThemeNotifier
+                    title: value.fetchTheme
                         ? const Text('Light Mode')
                         : const Text('Dark Mode'),
                   ),
@@ -115,6 +117,7 @@ class DashboardScreen extends StatelessWidget {
                 ListTile(
                   onTap: () {
                     userNameProvider.clearUserName();
+                    themeProvider.clearTheme();
                     Navigator.of(context).pushReplacementNamed('/');
                   },
                   leading: const Icon(Icons.logout_rounded),

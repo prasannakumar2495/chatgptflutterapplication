@@ -49,9 +49,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             useMaterial3: true,
-            brightness: notifier.fetchThemeNotifier
-                ? Brightness.dark
-                : Brightness.light,
+            brightness:
+                notifier.fetchTheme ? Brightness.dark : Brightness.light,
           ),
           home: const LoginScreen(),
           routes: {

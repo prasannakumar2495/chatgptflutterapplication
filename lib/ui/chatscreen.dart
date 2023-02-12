@@ -122,7 +122,7 @@ class _ChatScreenState extends State<ChatScreen> {
               endRadius: 20,
               repeat: true,
               duration: const Duration(milliseconds: 1000),
-              glowColor: value.fetchThemeNotifier
+              glowColor: value.fetchTheme
                   ? Colors.white38
                   : const Color.fromARGB(255, 10, 11, 12),
               repeatPauseDuration: const Duration(milliseconds: 100),

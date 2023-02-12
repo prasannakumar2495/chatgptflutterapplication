@@ -42,71 +42,69 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 250,
-              width: 250,
-              child: Image.asset('assets/logotransperant.png'),
-            ),
-            const Divider(
-              color: Colors.transparent,
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 10,
-                      right: 15,
-                      left: 15,
-                      bottom: 10,
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.name,
-                      controller: userNameController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (userNameController.text.isEmpty) {
-                          return 'User Name should not be empty!';
-                        } else if (userNameController.text.length < 5) {
-                          return 'User Name should have minimum 5 characters!';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: const BorderSide(width: 2),
-                        ),
-                        hintText: 'Enter Your User Name...',
-                        prefixIcon: const Icon(Icons.person_rounded),
-                      ),
-                    ),
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 250,
+            width: 250,
+            child: Image.asset('assets/logotransperant.png'),
+          ),
+          const Divider(
+            color: Colors.transparent,
+          ),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 10,
+                    right: 15,
+                    left: 15,
+                    bottom: 10,
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        userNameProvider.updateUserName(
-                          userNameController.text.trim(),
-                        );
-                        Navigator.of(context)
-                            .pushReplacementNamed(DashboardScreen.routeName);
+                  child: TextFormField(
+                    keyboardType: TextInputType.name,
+                    controller: userNameController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    textInputAction: TextInputAction.next,
+                    validator: (value) {
+                      if (userNameController.text.isEmpty) {
+                        return 'User Name should not be empty!';
+                      } else if (userNameController.text.length < 5) {
+                        return 'User Name should have minimum 5 characters!';
                       }
+                      return null;
                     },
-                    icon: const Icon(Icons.login_rounded),
-                    label: const Text('Login'),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(width: 2),
+                      ),
+                      hintText: 'Enter Your User Name...',
+                      prefixIcon: const Icon(Icons.person_rounded),
+                    ),
                   ),
-                ],
-              ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      userNameProvider.updateUserName(
+                        userNameController.text.trim(),
+                      );
+                      Navigator.of(context)
+                          .pushReplacementNamed(DashboardScreen.routeName);
+                    }
+                  },
+                  icon: const Icon(Icons.login_rounded),
+                  label: const Text('Login'),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

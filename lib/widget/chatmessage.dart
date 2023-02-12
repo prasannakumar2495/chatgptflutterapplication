@@ -16,10 +16,9 @@ class ChatMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         tileColor: sender == "User"
-            ? const Color.fromARGB(255, 50, 50, 50)
-            : const Color.fromARGB(255, 70, 70, 70),
+            ? (const Color.fromARGB(255, 50, 50, 50))
+            : (const Color.fromARGB(255, 70, 70, 70)),
         leading: CircleAvatar(
-          backgroundColor: Colors.transparent,
           backgroundImage: sender == "User"
               ? const AssetImage('assets/man.png')
               : const AssetImage('assets/aigptlowresolutioncolorlogo.png'),
