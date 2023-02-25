@@ -72,9 +72,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     textInputAction: TextInputAction.next,
                     validator: (value) {
                       if (userNameController.text.isEmpty) {
-                        return 'User Name should not be empty!';
+                        return 'Name should not be empty!';
                       } else if (userNameController.text.length < 5) {
-                        return 'User Name should have minimum 5 characters!';
+                        return 'Name should have minimum 5 characters!';
                       }
                       return null;
                     },
@@ -83,12 +83,37 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(width: 2),
                       ),
-                      hintText: 'Enter Your User Name...',
+                      hintText: 'Enter Your Name...',
                       prefixIcon: const Icon(Icons.person_rounded),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Info About Name'),
+                                content: const Text(
+                                    'The user only needs to input their name and click "Next" to advance to the next screen; there is no need to register.'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('OK'),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.info_rounded),
+                      ),
                     ),
                   ),
                 ),
-                ElevatedButton.icon(
+                const Divider(
+                  color: Colors.transparent,
+                ),
+                ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       userNameProvider.updateUserName(
@@ -98,8 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           .pushReplacementNamed(DashboardScreen.routeName);
                     }
                   },
-                  icon: const Icon(Icons.login_rounded),
-                  label: const Text('Login'),
+                  child: const Text('Next'),
                 ),
               ],
             ),
