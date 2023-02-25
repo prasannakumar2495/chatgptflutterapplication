@@ -69,25 +69,6 @@ class _ChatScreenState extends State<ChatScreen> {
     _controller.clear();
   }
 
-  void onListen() async {
-    if (isListening) {
-      bool available = await _speechToText.initialize(
-        onStatus: (status) => debugPrint('onStatus: $status'),
-        onError: (errorNotification) =>
-            debugPrint('onError: $errorNotification'),
-      );
-      if (available) {
-        _speechToText.listen(
-          onResult: (result) {
-            _controller.text = result.recognizedWords;
-          },
-        );
-      } else {
-        _speechToText.stop();
-      }
-    }
-  }
-
   Widget _buildQuestionComposer(ChatMessagesProvider provider) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -137,6 +118,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   });
                   if (isListening) {
                     onListen();
+                  } else {
+                    onStopListen();
                   }
                 },
               ),
@@ -145,6 +128,34 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ],
     ).px16();
+  }
+
+  void onListen() async {
+    bool available = await _speechToText.initialize(
+      onStatus: (status) => debugPrint('onStatus: $status'),
+      onError: (errorNotification) => debugPrint('onError: $errorNotification'),
+    );
+    if (available) {
+      _speechToText.listen(
+        onResult: (result) {
+          setState(() {
+            isListening = !isListening;
+          });
+          _controller.text = result.recognizedWords;
+        },
+        listenFor: const Duration(seconds: 5),
+      );
+    }
+  }
+
+  void onStopListen() async {
+    bool available = await _speechToText.initialize(
+      onStatus: (status) => debugPrint('onStatus: $status'),
+      onError: (errorNotification) => debugPrint('onError: $errorNotification'),
+    );
+    if (available) {
+      _speechToText.stop();
+    }
   }
 
   @override
