@@ -48,7 +48,7 @@ class DashboardScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.pop(context);
-                      context.go(CHAT_SCREEN);
+                      context.go('/$CHAT_SCREEN');
                     },
                     child: const ListTile(
                       visualDensity: VisualDensity(vertical: -4, horizontal: 0),

@@ -18,11 +18,11 @@ class DashboardSingleView extends StatelessWidget {
         child: InkWell(
           onTap: () {
             if (typeName == 'Ask Questions') {
-              context.go(CHAT_SCREEN);
+              context.go('/$CHAT_SCREEN');
             } else if (typeName == 'Check Spellings') {
-              context.go(EDIT_SCREEN);
+              context.go('/$EDIT_SCREEN');
             } else if (typeName == 'Generate Images') {
-              context.go(IMAGE_SCREEN);
+              context.go('/$IMAGE_SCREEN');
             }
           },
           child: Center(
