@@ -76,14 +76,16 @@ class _ChatScreenState extends State<ChatScreen> {
       children: [
         Expanded(
           child: TextField(
-            onSubmitted: (value) => sendMessage(provider),
+            onSubmitted: (value) {
+              if (_controller.text.isNotEmptyAndNotNull) sendMessage(provider);
+            },
             controller: _controller,
             decoration: const InputDecoration(hintText: 'Enter the Query...'),
           ),
         ),
         IconButton(
           onPressed: () {
-            if (_controller.text.isNotEmpty) {
+            if (_controller.text.isNotEmptyAndNotNull) {
               sendMessage(provider);
             } else {
               ScaffoldMessenger.of(context).clearSnackBars();
