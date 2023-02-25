@@ -1,6 +1,6 @@
 import 'package:chatgptflutterapplication/providers/username.dart';
-import 'package:chatgptflutterapplication/ui/dashbord.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     response.then((value) {
       if (value.isNotEmptyAndNotNull) {
         debugPrint('UserName is: $value');
-        Navigator.of(context).pushReplacementNamed(DashboardScreen.routeName);
+        context.go('/');
       }
     });
 
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: const Text('OK'),
                                     onPressed: () =>
                                         Navigator.of(context).pop(),
-                                  )
+                                  ),
                                 ],
                               );
                             },
@@ -119,8 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       userNameProvider.updateUserName(
                         userNameController.text.trim(),
                       );
-                      Navigator.of(context)
-                          .pushReplacementNamed(DashboardScreen.routeName);
+                      context.go('/');
                     }
                   },
                   child: const Text('Next'),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ImageScreen extends StatefulWidget {
-  static const routeName = 'imageScreen';
   const ImageScreen({super.key});
 
   @override

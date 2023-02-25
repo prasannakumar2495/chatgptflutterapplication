@@ -1,7 +1,5 @@
-import 'package:chatgptflutterapplication/providers/username.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
 class ChatMessage extends StatelessWidget {
   final String text;
@@ -23,11 +21,9 @@ class ChatMessage extends StatelessWidget {
               ? const AssetImage('assets/man.png')
               : const AssetImage('assets/aigptlowresolutioncolorlogo.png'),
         ),
-        title: Consumer<UserNameProvider>(
-          builder: (context, value, child) => Text(
-            sender == "User" ? value.fetchUserName : sender,
-            style: GoogleFonts.roboto(color: Colors.white),
-          ),
+        title: Text(
+          sender,
+          style: GoogleFonts.roboto(color: Colors.white),
         ),
         subtitle: Text(
           text,

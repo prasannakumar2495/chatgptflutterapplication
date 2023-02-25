@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class EditScreen extends StatefulWidget {
-  static const routeName = 'editScreen';
   const EditScreen({super.key});
 
   @override

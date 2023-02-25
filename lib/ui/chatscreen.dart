@@ -11,7 +11,6 @@ import 'package:velocity_x/velocity_x.dart';
 import '../widget/chatmessage.dart';
 
 class ChatScreen extends StatefulWidget {
-  static const routeName = 'chatScreen';
   const ChatScreen({super.key});
 
   @override

@@ -7,15 +7,39 @@ import 'package:chatgptflutterapplication/ui/chatscreen.dart';
 import 'package:chatgptflutterapplication/ui/dashbord.dart';
 import 'package:chatgptflutterapplication/ui/editscreen.dart';
 import 'package:chatgptflutterapplication/ui/imagesscreen.dart';
-import 'package:chatgptflutterapplication/ui/login.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/themeprovider.dart';
+import 'util/constants.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+final _router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const DashboardScreen(),
+      routes: <RouteBase>[
+        GoRoute(
+          path: CHAT_SCREEN,
+          builder: (context, state) => const ChatScreen(),
+        ),
+        GoRoute(
+          path: EDIT_SCREEN,
+          builder: (context, state) => const EditScreen(),
+        ),
+        GoRoute(
+          path: IMAGE_SCREEN,
+          builder: (context, state) => const ImageScreen(),
+        ),
+      ],
+    ),
+  ],
+);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -44,7 +68,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: Consumer<ThemeNotifierProvider>(
-        builder: (context, notifier, child) => MaterialApp(
+        builder: (context, notifier, child) => MaterialApp.router(
           title: 'AIBot',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
@@ -52,13 +76,7 @@ class MyApp extends StatelessWidget {
             brightness:
                 notifier.fetchTheme ? Brightness.dark : Brightness.light,
           ),
-          home: const LoginScreen(),
-          routes: {
-            ChatScreen.routeName: (context) => const ChatScreen(),
-            EditScreen.routeName: (context) => const EditScreen(),
-            ImageScreen.routeName: (context) => const ImageScreen(),
-            DashboardScreen.routeName: (context) => const DashboardScreen(),
-          },
+          routerConfig: _router,
         ),
       ),
     );

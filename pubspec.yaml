@@ -48,6 +48,7 @@ dependencies:
   rive: ^0.10.1
   shared_preferences: ^2.0.17
   loading_animation_widget: ^1.2.0+4
+  go_router: ^6.2.0
 
 flutter_icons:
   android: "launcher_icon"
